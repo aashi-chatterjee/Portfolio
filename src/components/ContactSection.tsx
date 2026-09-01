@@ -288,22 +288,21 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
                   </div>
                   
                   <div className="space-y-1.5">
-                    <h4 className="text-lg font-bold text-slate-100 font-heading">
-                      Message Dispatched!
+                    <h4 className="text-xl font-bold text-slate-100 font-heading">
+                      Message Sent Successfully!
                     </h4>
                     <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
-                      Your message was submitted for <span className="text-amber-300 font-semibold">{profile.socialLinks.email}</span>.
+                      Thank you for reaching out. Your message has been delivered to <span className="text-amber-300 font-semibold">{profile.socialLinks.email}</span>.
                     </p>
                   </div>
 
-                  {/* Notice for first-time FormSubmit activation */}
-                  <div className="text-left bg-slate-900/90 border border-slate-800 rounded-xl p-3.5 text-xs text-slate-300 space-y-2 max-w-lg mx-auto">
-                    <div className="flex items-start gap-2 text-amber-400 font-semibold text-[11px] uppercase tracking-wider">
-                      <Sparkles className="w-4 h-4 shrink-0 mt-0.5" />
-                      <span>Delivery Verification Notice</span>
-                    </div>
-                    <p className="text-[11px] leading-relaxed text-slate-400">
-                      If this was your first test submission to <span className="text-slate-200 font-mono">{profile.socialLinks.email}</span>, FormSubmit sends a <strong>one-time activation email</strong>. Please check your inbox (and spam folder) to click <em>"Activate Form"</em> so subsequent messages are delivered directly.
+                  {/* Confirmed Delivery Note */}
+                  <div className="text-center bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4 text-xs text-slate-300 space-y-1 max-w-md mx-auto">
+                    <p className="text-xs font-semibold text-emerald-400">
+                      I typically respond within 24–48 hours.
+                    </p>
+                    <p className="text-[11px] text-slate-400">
+                      A copy of your inquiry details has been logged and sent to your email as well.
                     </p>
                   </div>
 

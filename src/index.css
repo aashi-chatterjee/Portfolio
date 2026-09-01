@@ -550,6 +550,29 @@ html[data-theme="paper"] .achievement-banner-desc {
   color: #475569 !important;
 }
 
+html[data-theme="paper"] #contact-success-message {
+  background-color: #ffffff !important;
+  border-color: rgba(16, 185, 129, 0.4) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
+}
+
+html[data-theme="paper"] #contact-success-message h4 {
+  color: #0f172a !important;
+}
+
+html[data-theme="paper"] #contact-success-message p {
+  color: #334155 !important;
+}
+
+html[data-theme="paper"] #contact-success-message .bg-emerald-500\/10 {
+  background-color: #ecfdf5 !important;
+  border-color: #a7f3d0 !important;
+}
+
+html[data-theme="paper"] #contact-success-message .text-emerald-400 {
+  color: #047857 !important;
+}
+
 /* =========================================================================
    PRINT STYLES FOR CRISP RESUME PRINTING / PDF EXPORT
    ========================================================================= */
@@ -656,6 +679,3 @@ html[data-theme="paper"] .achievement-banner-desc {
 .animate-glow {
   animation: pulseGlow 6s ease-in-out infinite;
 }
-
-
-
