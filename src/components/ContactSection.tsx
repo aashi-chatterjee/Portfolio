@@ -12,7 +12,8 @@ import {
   MessageSquare, 
   ExternalLink,
   Sparkles,
-  PhoneCall
+  AlertCircle,
+  MailCheck
 } from 'lucide-react';
 import { ProfileData } from '../types';
 
@@ -24,6 +25,10 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionFeedback, setSubmissionFeedback] = useState<{
+    type: 'success' | 'info' | 'error';
+    message: string;
+  } | null>(null);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -56,23 +61,73 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       errors.email = 'Please enter a valid email address';
     }
-    if (!formData.message.trim() || formData.message.trim().length < 10) {
-      errors.message = 'Please enter a message of at least 10 characters';
+    if (!formData.message.trim() || formData.message.trim().length < 5) {
+      errors.message = 'Please enter a message of at least 5 characters';
     }
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const generateMailtoUrl = () => {
+    const recipient = profile.socialLinks.email || 'aashicofficial@yahoo.com';
+    const subject = encodeURIComponent(`[Portfolio Inquiry] ${formData.inquiryType || 'General Inquiry'} from ${formData.name || 'Visitor'}`);
+    const body = encodeURIComponent(
+      `Hello Aashi,\n\nName: ${formData.name || '(Not provided)'}\nEmail: ${formData.email || '(Not provided)'}\nInquiry: ${formData.inquiryType || 'General Inquiry'}\n\nMessage:\n${formData.message || ''}\n\n--\nSent from Portfolio Contact Form`
+    );
+    return `mailto:${recipient}?subject=${subject}&body=${body}`;
+  };
+
+  const handleDirectMailto = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    const mailtoUrl = generateMailtoUrl();
+    window.location.href = mailtoUrl;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
 
     setIsSubmitting(true);
-    // Simulate responsive sending flow
-    setTimeout(() => {
+    setSubmissionFeedback(null);
+
+    const recipientEmail = profile.socialLinks.email || 'aashicofficial@yahoo.com';
+
+    try {
+      // Direct AJAX submission using FormSubmit.co service (no API key required)
+      const response = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(recipientEmail)}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          _subject: `[Portfolio Inquiry] ${formData.inquiryType} from ${formData.name}`,
+          inquiryType: formData.inquiryType,
+          message: formData.message,
+          _template: 'table',
+          _captcha: 'false'
+        })
+      });
+
+      const data = await response.json().catch(() => ({}));
+
       setIsSubmitting(false);
       setFormSubmitted(true);
-    }, 600);
+      setSubmissionFeedback({
+        type: 'success',
+        message: data.message || `Message dispatched to ${recipientEmail}. If this is your first test, please check your inbox (or spam) for a one-time activation confirmation from FormSubmit.`
+      });
+    } catch (err) {
+      console.warn('Form submission encountered network/adblocker issue, providing direct mailto fallback', err);
+      setIsSubmitting(false);
+      setFormSubmitted(true);
+      setSubmissionFeedback({
+        type: 'info',
+        message: `Network request could not reach the endpoint. You can send this message directly via your email application.`
+      });
+    }
   };
 
   return (
@@ -218,31 +273,59 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
               
               <div className="space-y-1">
                 <h3 className="text-xl font-bold text-slate-100 font-heading flex items-center gap-2">
-                  <MessageSquare className="w-5 h-5 text-indigo-400" />
+                  <MessageSquare className="w-5 h-5 text-amber-400" />
                   <span>Send a Direct Message</span>
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-400">
-                  Fill out the form below or email me directly at <span className="text-indigo-300">{profile.socialLinks.email}</span>.
+                  Submit the form below or write directly to <a href={`mailto:${profile.socialLinks.email}`} className="text-amber-400 font-semibold hover:underline">{profile.socialLinks.email}</a>.
                 </p>
               </div>
 
               {formSubmitted ? (
-                <div id="contact-success-message" className="py-12 px-6 text-center bg-slate-950/80 rounded-xl border border-emerald-500/30 space-y-4 animate-in zoom-in-95">
+                <div id="contact-success-message" className="py-8 px-6 text-center bg-slate-950/90 rounded-2xl border border-emerald-500/30 space-y-4 animate-in zoom-in-95">
                   <div className="w-12 h-12 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center mx-auto">
                     <Check className="w-6 h-6" />
                   </div>
-                  <h4 className="text-lg font-bold text-slate-100 font-heading">Thank You for Reaching Out!</h4>
-                  <p className="text-xs sm:text-sm text-slate-400 max-w-md mx-auto leading-relaxed">
-                    Your message has been captured. I will review the details and get back to you at <span className="text-indigo-300 font-semibold">{formData.email}</span> promptly.
-                  </p>
-                  <div className="pt-2">
+                  
+                  <div className="space-y-1.5">
+                    <h4 className="text-lg font-bold text-slate-100 font-heading">
+                      Message Dispatched!
+                    </h4>
+                    <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
+                      Your message was submitted for <span className="text-amber-300 font-semibold">{profile.socialLinks.email}</span>.
+                    </p>
+                  </div>
+
+                  {/* Notice for first-time FormSubmit activation */}
+                  <div className="text-left bg-slate-900/90 border border-slate-800 rounded-xl p-3.5 text-xs text-slate-300 space-y-2 max-w-lg mx-auto">
+                    <div className="flex items-start gap-2 text-amber-400 font-semibold text-[11px] uppercase tracking-wider">
+                      <Sparkles className="w-4 h-4 shrink-0 mt-0.5" />
+                      <span>Delivery Verification Notice</span>
+                    </div>
+                    <p className="text-[11px] leading-relaxed text-slate-400">
+                      If this was your first test submission to <span className="text-slate-200 font-mono">{profile.socialLinks.email}</span>, FormSubmit sends a <strong>one-time activation email</strong>. Please check your inbox (and spam folder) to click <em>"Activate Form"</em> so subsequent messages are delivered directly.
+                    </p>
+                  </div>
+
+                  {/* Quick Action Buttons */}
+                  <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
+                    <button
+                      id="contact-open-client-btn"
+                      onClick={handleDirectMailto}
+                      className="px-4 py-2.5 text-xs font-semibold text-amber-300 hover:text-amber-200 bg-amber-500/10 hover:bg-amber-500/20 rounded-xl border border-amber-500/30 transition-all flex items-center gap-2 cursor-pointer"
+                    >
+                      <MailCheck className="w-3.5 h-3.5" />
+                      <span>Also Open in Default Mail Client</span>
+                    </button>
+
                     <button
                       id="contact-send-another-btn"
                       onClick={() => {
                         setFormSubmitted(false);
+                        setSubmissionFeedback(null);
                         setFormData({ name: '', email: '', inquiryType: 'Full-time Opportunity', message: '' });
                       }}
-                      className="px-4 py-2 text-xs font-semibold text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-lg border border-slate-700 transition-colors"
+                      className="px-4 py-2.5 text-xs font-semibold text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-xl border border-slate-700 transition-colors cursor-pointer"
                     >
                       Send Another Message
                     </button>
@@ -265,7 +348,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
                         value={formData.name}
                         onChange={handleInputChange}
                         className={`w-full px-3.5 py-2.5 bg-slate-950 border rounded-xl text-xs sm:text-sm text-slate-200 placeholder:text-slate-600 focus:outline-none transition-colors ${
-                          formErrors.name ? 'border-rose-500' : 'border-slate-800 focus:border-indigo-500'
+                          formErrors.name ? 'border-rose-500' : 'border-slate-800 focus:border-amber-500/50'
                         }`}
                       />
                       {formErrors.name && <p className="text-[11px] text-rose-400">{formErrors.name}</p>}
@@ -283,7 +366,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
                         value={formData.email}
                         onChange={handleInputChange}
                         className={`w-full px-3.5 py-2.5 bg-slate-950 border rounded-xl text-xs sm:text-sm text-slate-200 placeholder:text-slate-600 focus:outline-none transition-colors ${
-                          formErrors.email ? 'border-rose-500' : 'border-slate-800 focus:border-indigo-500'
+                          formErrors.email ? 'border-rose-500' : 'border-slate-800 focus:border-amber-500/50'
                         }`}
                       />
                       {formErrors.email && <p className="text-[11px] text-rose-400">{formErrors.email}</p>}
@@ -298,7 +381,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
                       name="inquiryType"
                       value={formData.inquiryType}
                       onChange={handleInputChange}
-                      className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl text-xs sm:text-sm text-slate-200 focus:outline-none transition-colors"
+                      className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 focus:border-amber-500/50 rounded-xl text-xs sm:text-sm text-slate-200 focus:outline-none transition-colors"
                     >
                       <option value="Full-time Opportunity">Full-time Design / Engineering Role</option>
                       <option value="Contract Consulting">Product & UX Design Consulting</option>
@@ -326,31 +409,44 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
                       value={formData.message}
                       onChange={handleInputChange}
                       className={`w-full px-3.5 py-2.5 bg-slate-950 border rounded-xl text-xs sm:text-sm text-slate-200 placeholder:text-slate-600 focus:outline-none transition-colors resize-y ${
-                        formErrors.message ? 'border-rose-500' : 'border-slate-800 focus:border-indigo-500'
+                        formErrors.message ? 'border-rose-500' : 'border-slate-800 focus:border-amber-500/50'
                       }`}
                     />
                     {formErrors.message && <p className="text-[11px] text-rose-400">{formErrors.message}</p>}
                   </div>
 
-                  {/* Submit Button */}
-                  <button
-                    id="contact-submit-btn"
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="theme-gradient-btn w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold shadow-md transition-all cursor-pointer disabled:opacity-50 hover:opacity-95"
-                  >
-                    {isSubmitting ? (
-                      <span className="flex items-center gap-2">
-                        <span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                        <span>Sending Message...</span>
-                      </span>
-                    ) : (
-                      <>
-                        <Send className="w-4 h-4" />
-                        <span>Send Message</span>
-                      </>
-                    )}
-                  </button>
+                  {/* Submit Actions Grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 pt-1">
+                    <button
+                      id="contact-submit-btn"
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="sm:col-span-8 theme-gradient-btn w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold shadow-md transition-all cursor-pointer disabled:opacity-50 hover:opacity-95"
+                    >
+                      {isSubmitting ? (
+                        <span className="flex items-center gap-2">
+                          <span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                          <span>Sending Message...</span>
+                        </span>
+                      ) : (
+                        <>
+                          <Send className="w-4 h-4" />
+                          <span>Send via Web Form</span>
+                        </>
+                      )}
+                    </button>
+
+                    <button
+                      id="contact-mailto-btn"
+                      type="button"
+                      onClick={handleDirectMailto}
+                      title="Open default email application"
+                      className="sm:col-span-4 w-full flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl text-xs font-semibold text-slate-300 hover:text-white bg-slate-850 hover:bg-slate-800 border border-slate-700/80 transition-all cursor-pointer"
+                    >
+                      <Mail className="w-3.5 h-3.5 text-amber-400" />
+                      <span>Email App</span>
+                    </button>
+                  </div>
 
                 </form>
               )}
