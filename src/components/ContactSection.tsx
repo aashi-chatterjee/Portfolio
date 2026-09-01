@@ -302,7 +302,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
                       I typically respond within 24–48 hours.
                     </p>
                     <p className="text-[11px] text-slate-400">
-                      A copy of your inquiry details has been logged and sent to your email as well.
+                      If your message is time-sensitive, feel free to connect directly via email or LinkedIn.
                     </p>
                   </div>
 
