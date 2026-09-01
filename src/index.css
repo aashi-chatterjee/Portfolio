@@ -1,0 +1,661 @@
+@import "tailwindcss";
+
+:root {
+  /* Default theme: Warm Obsidian & Champagne Bronze */
+  --app-bg: #0c0e12;
+  --app-bg-elevated: #14171f;
+  --app-card: #151922;
+  --app-card-hover: #1c222e;
+  --app-card-border: rgba(229, 169, 93, 0.18);
+  --app-card-border-hover: rgba(229, 169, 93, 0.45);
+  --app-accent: #f59e0b;
+  --app-accent-hover: #fbbf24;
+  --app-accent-soft: rgba(245, 158, 11, 0.15);
+  --app-accent-border: rgba(245, 158, 11, 0.35);
+  --app-accent-gradient: linear-gradient(135deg, #f59e0b 0%, #fbbf24 60%, #fef08a 100%);
+  --app-accent-text-gradient: linear-gradient(135deg, #fbbf24 0%, #fde68a 50%, #fef08a 100%);
+  --app-text-primary: #f8fafc;
+  --app-text-secondary: #cbd5e1;
+  --app-text-muted: #94a3b8;
+  --app-header-bg: rgba(12, 14, 18, 0.88);
+  --app-modal-bg: #11141b;
+  --app-input-bg: #0c0e12;
+  --app-badge-bg: rgba(245, 158, 11, 0.12);
+  --app-badge-text: #fbbf24;
+  --app-badge-border: rgba(245, 158, 11, 0.3);
+  --app-btn-text: #0c0e12;
+}
+
+[data-theme="bronze"] {
+  --app-bg: #0c0e12;
+  --app-bg-elevated: #14171f;
+  --app-card: #151922;
+  --app-card-hover: #1c222e;
+  --app-card-border: rgba(229, 169, 93, 0.18);
+  --app-card-border-hover: rgba(229, 169, 93, 0.45);
+  --app-accent: #f59e0b;
+  --app-accent-hover: #fbbf24;
+  --app-accent-soft: rgba(245, 158, 11, 0.15);
+  --app-accent-border: rgba(245, 158, 11, 0.35);
+  --app-accent-gradient: linear-gradient(135deg, #f59e0b 0%, #fbbf24 60%, #fef08a 100%);
+  --app-accent-text-gradient: linear-gradient(135deg, #fbbf24 0%, #fde68a 50%, #fef08a 100%);
+  --app-text-primary: #f8fafc;
+  --app-text-secondary: #cbd5e1;
+  --app-text-muted: #94a3b8;
+  --app-header-bg: rgba(12, 14, 18, 0.88);
+  --app-modal-bg: #11141b;
+  --app-input-bg: #0c0e12;
+  --app-badge-bg: rgba(245, 158, 11, 0.12);
+  --app-badge-text: #fbbf24;
+  --app-badge-border: rgba(245, 158, 11, 0.3);
+  --app-btn-text: #0c0e12;
+}
+
+[data-theme="graphite"] {
+  --app-bg: #090a0f;
+  --app-bg-elevated: #12141c;
+  --app-card: #151824;
+  --app-card-hover: #1c2132;
+  --app-card-border: rgba(129, 140, 248, 0.2);
+  --app-card-border-hover: rgba(129, 140, 248, 0.5);
+  --app-accent: #818cf8;
+  --app-accent-hover: #a5b4fc;
+  --app-accent-soft: rgba(129, 140, 248, 0.15);
+  --app-accent-border: rgba(129, 140, 248, 0.35);
+  --app-accent-gradient: linear-gradient(135deg, #6366f1 0%, #818cf8 60%, #c084fc 100%);
+  --app-accent-text-gradient: linear-gradient(135deg, #a5b4fc 0%, #c084fc 50%, #e879f9 100%);
+  --app-text-primary: #ffffff;
+  --app-text-secondary: #cbd5e1;
+  --app-text-muted: #94a3b8;
+  --app-header-bg: rgba(9, 10, 15, 0.88);
+  --app-modal-bg: #10121a;
+  --app-input-bg: #090a0f;
+  --app-badge-bg: rgba(129, 140, 248, 0.15);
+  --app-badge-text: #a5b4fc;
+  --app-badge-border: rgba(129, 140, 248, 0.35);
+  --app-btn-text: #090a0f;
+}
+
+[data-theme="emerald"] {
+  --app-bg: #050e09;
+  --app-bg-elevated: #0b1a12;
+  --app-card: #0e2217;
+  --app-card-hover: #142e20;
+  --app-card-border: rgba(16, 185, 129, 0.2);
+  --app-card-border-hover: rgba(16, 185, 129, 0.5);
+  --app-accent: #10b981;
+  --app-accent-hover: #34d399;
+  --app-accent-soft: rgba(16, 185, 129, 0.15);
+  --app-accent-border: rgba(16, 185, 129, 0.35);
+  --app-accent-gradient: linear-gradient(135deg, #059669 0%, #10b981 60%, #6ee7b7 100%);
+  --app-accent-text-gradient: linear-gradient(135deg, #34d399 0%, #6ee7b7 50%, #a7f3d0 100%);
+  --app-text-primary: #f0fdf4;
+  --app-text-secondary: #cbd5e1;
+  --app-text-muted: #86efac;
+  --app-header-bg: rgba(5, 14, 9, 0.88);
+  --app-modal-bg: #091710;
+  --app-input-bg: #050e09;
+  --app-badge-bg: rgba(16, 185, 129, 0.15);
+  --app-badge-text: #6ee7b7;
+  --app-badge-border: rgba(16, 185, 129, 0.35);
+  --app-btn-text: #050e09;
+}
+
+[data-theme="midnight"] {
+  --app-bg: #050b18;
+  --app-bg-elevated: #0c162d;
+  --app-card: #101e3b;
+  --app-card-hover: #162a52;
+  --app-card-border: rgba(56, 189, 248, 0.2);
+  --app-card-border-hover: rgba(56, 189, 248, 0.5);
+  --app-accent: #38bdf8;
+  --app-accent-hover: #7dd3fc;
+  --app-accent-soft: rgba(56, 189, 248, 0.15);
+  --app-accent-border: rgba(56, 189, 248, 0.35);
+  --app-accent-gradient: linear-gradient(135deg, #0284c7 0%, #38bdf8 60%, #93c5fd 100%);
+  --app-accent-text-gradient: linear-gradient(135deg, #7dd3fc 0%, #93c5fd 50%, #bae6fd 100%);
+  --app-text-primary: #f8fafc;
+  --app-text-secondary: #cbd5e1;
+  --app-text-muted: #94a3b8;
+  --app-header-bg: rgba(5, 11, 24, 0.88);
+  --app-modal-bg: #091326;
+  --app-input-bg: #050b18;
+  --app-badge-bg: rgba(56, 189, 248, 0.15);
+  --app-badge-text: #7dd3fc;
+  --app-badge-border: rgba(56, 189, 248, 0.35);
+  --app-btn-text: #050b18;
+}
+
+[data-theme="paper"] {
+  --app-bg: #f8f7f4;
+  --app-bg-elevated: #f1ede4;
+  --app-card: #ffffff;
+  --app-card-hover: #faf9f5;
+  --app-card-border: rgba(15, 23, 42, 0.12);
+  --app-card-border-hover: rgba(194, 65, 12, 0.5);
+  --app-accent: #c2410c;
+  --app-accent-hover: #ea580c;
+  --app-accent-soft: rgba(194, 65, 12, 0.12);
+  --app-accent-border: rgba(194, 65, 12, 0.35);
+  --app-accent-gradient: linear-gradient(135deg, #c2410c 0%, #ea580c 60%, #f97316 100%);
+  --app-accent-text-gradient: linear-gradient(135deg, #9a3412 0%, #c2410c 50%, #ea580c 100%);
+  --app-text-primary: #0f172a;
+  --app-text-secondary: #334155;
+  --app-text-muted: #64748b;
+  --app-header-bg: rgba(248, 247, 244, 0.92);
+  --app-modal-bg: #ffffff;
+  --app-input-bg: #ffffff;
+  --app-badge-bg: rgba(194, 65, 12, 0.1);
+  --app-badge-text: #9a3412;
+  --app-badge-border: rgba(194, 65, 12, 0.28);
+  --app-btn-text: #ffffff;
+}
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: var(--app-bg) !important;
+    color: var(--app-text-primary) !important;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+  
+  h1, h2, h3, .font-heading {
+    font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+  }
+  
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* =========================================================================
+   DYNAMIC THEME OVERRIDES FOR FULL APPLET RESPONSIVENESS & COLOR HARMONY
+   ========================================================================= */
+
+/* Backgrounds & Cards */
+html[data-theme] .bg-slate-950,
+html[data-theme] .bg-slate-950\/90,
+html[data-theme] .bg-slate-950\/95 {
+  background-color: var(--app-bg) !important;
+}
+
+html[data-theme] .bg-slate-950\/85,
+html[data-theme] .bg-slate-950\/80,
+html[data-theme] .bg-slate-950\/70,
+html[data-theme] .bg-slate-950\/60,
+html[data-theme] .bg-slate-950\/50 {
+  background-color: var(--app-bg-elevated) !important;
+}
+
+html[data-theme] .bg-slate-900,
+html[data-theme] .bg-slate-900\/95,
+html[data-theme] .bg-slate-900\/90,
+html[data-theme] .bg-slate-900\/80,
+html[data-theme] .bg-slate-900\/70,
+html[data-theme] .bg-slate-900\/60,
+html[data-theme] .bg-slate-900\/50,
+html[data-theme] .bg-slate-900\/40 {
+  background-color: var(--app-card) !important;
+}
+
+html[data-theme] .bg-slate-850,
+html[data-theme] .bg-slate-800,
+html[data-theme] .bg-slate-800\/90,
+html[data-theme] .bg-slate-800\/80,
+html[data-theme] .bg-slate-800\/60,
+html[data-theme] .bg-slate-800\/50 {
+  background-color: var(--app-bg-elevated) !important;
+}
+
+/* Borders */
+html[data-theme] .border-slate-800,
+html[data-theme] .border-slate-800\/80,
+html[data-theme] .border-slate-800\/90,
+html[data-theme] .border-slate-800\/60,
+html[data-theme] .border-slate-700,
+html[data-theme] .border-slate-700\/80,
+html[data-theme] .border-slate-700\/60,
+html[data-theme] .border-slate-900 {
+  border-color: var(--app-card-border) !important;
+}
+
+/* Typography / Text colors */
+html[data-theme] .text-slate-100 {
+  color: var(--app-text-primary) !important;
+}
+
+html[data-theme] .text-slate-200 {
+  color: var(--app-text-primary) !important;
+}
+
+html[data-theme] .text-slate-300 {
+  color: var(--app-text-secondary) !important;
+}
+
+html[data-theme] .text-slate-400 {
+  color: var(--app-text-muted) !important;
+}
+
+/* Accents & Highlights */
+html[data-theme] .text-amber-400,
+html[data-theme] .text-amber-300,
+html[data-theme] .text-amber-200,
+html[data-theme] .text-indigo-400,
+html[data-theme] .text-indigo-300 {
+  color: var(--app-accent) !important;
+}
+
+html[data-theme] .bg-amber-500\/10,
+html[data-theme] .bg-amber-500\/15,
+html[data-theme] .bg-amber-500\/20,
+html[data-theme] .bg-indigo-500\/10,
+html[data-theme] .bg-indigo-500\/20 {
+  background-color: var(--app-accent-soft) !important;
+  border-color: var(--app-accent-border) !important;
+}
+
+html[data-theme] .border-amber-500\/20,
+html[data-theme] .border-amber-500\/30,
+html[data-theme] .border-amber-500\/40,
+html[data-theme] .border-indigo-500\/20,
+html[data-theme] .border-indigo-500\/30,
+html[data-theme] .border-indigo-500\/40 {
+  border-color: var(--app-accent-border) !important;
+}
+
+/* Dynamic Gradients across all Themes */
+html[data-theme] .theme-gradient-text,
+html[data-theme] .bg-gradient-to-r.from-amber-300.via-amber-200.to-yellow-100 {
+  background: var(--app-accent-text-gradient) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+}
+
+html[data-theme] .theme-gradient-btn,
+html[data-theme] .bg-gradient-to-r.from-amber-400,
+html[data-theme] .bg-gradient-to-r.from-indigo-400,
+html[data-theme] .bg-gradient-to-r.from-amber-500 {
+  background: var(--app-accent-gradient) !important;
+  color: var(--app-btn-text) !important;
+}
+
+html[data-theme] .bg-gradient-to-tr.from-amber-400.via-amber-300.to-amber-200 {
+  background: var(--app-accent-gradient) !important;
+}
+
+/* Skills Progress Bar & Active Category Tabs */
+html[data-theme] .skill-progress-bar,
+html[data-theme] .bg-gradient-to-r.from-indigo-500.via-sky-400.to-cyan-400 {
+  background: var(--app-accent-gradient) !important;
+}
+
+html[data-theme] .skill-tab-active,
+html[data-theme] button.bg-indigo-600 {
+  background: var(--app-accent-gradient) !important;
+  color: var(--app-btn-text) !important;
+  border-color: var(--app-accent) !important;
+}
+
+/* Badges and Time Period Pills */
+html[data-theme] .theme-time-badge,
+html[data-theme] .bg-cyan-950\/60,
+html[data-theme] .bg-cyan-950\/50 {
+  background-color: var(--app-badge-bg) !important;
+  color: var(--app-badge-text) !important;
+  border-color: var(--app-badge-border) !important;
+}
+
+html[data-theme] .theme-time-badge span,
+html[data-theme] .bg-cyan-950\/60 .text-cyan-400,
+html[data-theme] .bg-cyan-950\/60 .text-cyan-300 {
+  color: var(--app-badge-text) !important;
+}
+
+/* Timeline elements in Experience */
+html[data-theme] .before\:from-indigo-500\/40::before {
+  background-image: linear-gradient(to bottom, var(--app-accent), var(--app-card-border), transparent) !important;
+}
+
+html[data-theme] .border-indigo-500 {
+  border-color: var(--app-accent) !important;
+}
+
+html[data-theme] .bg-indigo-400,
+html[data-theme] .bg-indigo-500 {
+  background-color: var(--app-accent) !important;
+}
+
+/* =========================================================================
+   LIGHT MODE (STUDIO LIGHT / PAPER) HIGH CONTRAST REFINEMENT
+   ========================================================================= */
+html[data-theme="paper"] {
+  color-scheme: light;
+}
+
+html[data-theme="paper"] body {
+  background-color: #f8f7f4 !important;
+  color: #0f172a !important;
+}
+
+html[data-theme="paper"] .bg-slate-900\/60,
+html[data-theme="paper"] .bg-slate-900\/70,
+html[data-theme="paper"] .bg-slate-900\/80,
+html[data-theme="paper"] .bg-slate-900\/90,
+html[data-theme="paper"] .bg-slate-900 {
+  background-color: #ffffff !important;
+  border-color: rgba(15, 23, 42, 0.12) !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05) !important;
+}
+
+html[data-theme="paper"] .bg-slate-950,
+html[data-theme="paper"] .bg-slate-950\/70,
+html[data-theme="paper"] .bg-slate-950\/80,
+html[data-theme="paper"] .bg-slate-950\/90,
+html[data-theme="paper"] .bg-slate-950\/95 {
+  background-color: #f1ede4 !important;
+  border-color: rgba(15, 23, 42, 0.12) !important;
+}
+
+/* Profile Title & Subtitles in Paper mode */
+html[data-theme="paper"] .text-slate-300 {
+  color: #334155 !important;
+}
+
+html[data-theme="paper"] .text-slate-400 {
+  color: #64748b !important;
+}
+
+html[data-theme="paper"] .text-slate-500 {
+  color: #64748b !important;
+}
+
+html[data-theme="paper"] .text-slate-100,
+html[data-theme="paper"] .text-slate-200 {
+  color: #0f172a !important;
+}
+
+/* Quick highlights & stats cards */
+html[data-theme="paper"] .bg-slate-950\/70 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* Curriculum Vitae & Case Studies card banner */
+html[data-theme="paper"] .from-indigo-950\/40 {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f7f4 100%) !important;
+  border-color: rgba(194, 65, 12, 0.25) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Light mode form inputs */
+html[data-theme="paper"] input,
+html[data-theme="paper"] textarea,
+html[data-theme="paper"] select {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+html[data-theme="paper"] input:focus,
+html[data-theme="paper"] textarea:focus,
+html[data-theme="paper"] select:focus {
+  border-color: #c2410c !important;
+  box-shadow: 0 0 0 2px rgba(194, 65, 12, 0.2) !important;
+}
+
+html[data-theme="paper"] input::placeholder,
+html[data-theme="paper"] textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Secondary Buttons in Paper theme */
+html[data-theme="paper"] .bg-slate-900\/50,
+html[data-theme="paper"] .bg-slate-800 {
+  background-color: #f1ede4 !important;
+  color: #1e293b !important;
+  border-color: #cbd5e1 !important;
+}
+
+html[data-theme="paper"] .bg-slate-900\/50:hover,
+html[data-theme="paper"] .bg-slate-800:hover {
+  background-color: #e6e0d4 !important;
+  color: #0f172a !important;
+}
+
+/* =========================================================================
+   STUDIO LIGHT (PAPER) NAVBAR & NAVIGATION HOVER FIXES
+   ========================================================================= */
+html[data-theme="paper"] #desktop-navigation {
+  background-color: #ece7dc !important;
+  border-color: rgba(15, 23, 42, 0.12) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+}
+
+html[data-theme="paper"] .nav-pill-inactive,
+html[data-theme="paper"] #desktop-navigation a:not(.nav-pill-active) {
+  color: #475569 !important;
+  background-color: transparent !important;
+}
+
+html[data-theme="paper"] .nav-pill-inactive:hover,
+html[data-theme="paper"] #desktop-navigation a:not(.nav-pill-active):hover {
+  background-color: #ffffff !important;
+  color: #c2410c !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+}
+
+html[data-theme="paper"] .nav-pill-active,
+html[data-theme="paper"] #desktop-navigation a.nav-pill-active {
+  background-color: #ffffff !important;
+  color: #c2410c !important;
+  border-color: rgba(194, 65, 12, 0.35) !important;
+  font-weight: 600 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+html[data-theme="paper"] #navbar-customize-btn {
+  background-color: #f1ede4 !important;
+  color: #1e293b !important;
+  border-color: #cbd5e1 !important;
+}
+
+html[data-theme="paper"] #navbar-customize-btn:hover {
+  background-color: #ffffff !important;
+  color: #c2410c !important;
+  border-color: rgba(194, 65, 12, 0.35) !important;
+}
+
+html[data-theme="paper"] #tablet-menu-toggle-btn {
+  background-color: #f1ede4 !important;
+  color: #1e293b !important;
+  border-color: #cbd5e1 !important;
+}
+
+html[data-theme="paper"] #tablet-menu-toggle-btn:hover {
+  background-color: #ffffff !important;
+  color: #c2410c !important;
+}
+
+html[data-theme="paper"] #mobile-nav-drawer {
+  background-color: rgba(248, 247, 244, 0.98) !important;
+  border-color: #e2e8f0 !important;
+}
+
+html[data-theme="paper"] #mobile-nav-drawer a {
+  color: #334155 !important;
+}
+
+html[data-theme="paper"] #mobile-nav-drawer a:hover {
+  background-color: #ffffff !important;
+  color: #c2410c !important;
+}
+
+/* =========================================================================
+   STUDIO LIGHT (PAPER) KEY ACHIEVEMENTS SECTION & BANNER REFINEMENT
+   ========================================================================= */
+html[data-theme="paper"] #achievements {
+  background-color: #f5f1e8 !important;
+  border-color: #e2dcd0 !important;
+}
+
+html[data-theme="paper"] .achievement-card {
+  background-color: #ffffff !important;
+  border-color: #e2dcd0 !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -2px rgba(0, 0, 0, 0.03) !important;
+}
+
+html[data-theme="paper"] .achievement-card:hover {
+  background-color: #ffffff !important;
+  border-color: rgba(194, 65, 12, 0.45) !important;
+  box-shadow: 0 10px 15px -3px rgba(194, 65, 12, 0.07), 0 4px 6px -4px rgba(0, 0, 0, 0.04) !important;
+}
+
+html[data-theme="paper"] .achievement-card h3 {
+  color: #0f172a !important;
+}
+
+html[data-theme="paper"] .achievement-card:hover h3 {
+  color: #c2410c !important;
+}
+
+html[data-theme="paper"] .achievement-card p {
+  color: #334155 !important;
+}
+
+html[data-theme="paper"] .achievement-card span.font-mono {
+  background-color: #f8f7f4 !important;
+  color: #475569 !important;
+  border-color: #e2e8f0 !important;
+}
+
+html[data-theme="paper"] .achievement-highlight-banner {
+  background: linear-gradient(135deg, #ffffff 0%, #fffbf5 100%) !important;
+  border: 1px solid rgba(194, 65, 12, 0.3) !important;
+  box-shadow: 0 6px 16px -2px rgba(194, 65, 12, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.03) !important;
+}
+
+html[data-theme="paper"] .achievement-icon-wrapper {
+  background-color: rgba(194, 65, 12, 0.12) !important;
+  color: #c2410c !important;
+  border: 1px solid rgba(194, 65, 12, 0.25) !important;
+}
+
+html[data-theme="paper"] .achievement-banner-title {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+html[data-theme="paper"] .achievement-banner-desc {
+  color: #475569 !important;
+}
+
+/* =========================================================================
+   PRINT STYLES FOR CRISP RESUME PRINTING / PDF EXPORT
+   ========================================================================= */
+@media print {
+  /* Hide all app navigational elements and background chrome */
+  nav,
+  header,
+  footer,
+  #hero,
+  #about,
+  #skills,
+  #projects,
+  #experience,
+  #contact,
+  #resume-modal-backdrop,
+  #resume-copy-markdown-btn,
+  #resume-print-btn,
+  #resume-modal-close-btn,
+  .theme-toggle-btn {
+    display: none !important;
+  }
+
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11pt !important;
+    line-height: 1.4 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #printable-resume {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  #printable-resume * {
+    color: #000000 !important;
+    background: transparent !important;
+    border-color: #cccccc !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  #printable-resume h1 {
+    font-size: 20pt !important;
+    font-weight: bold !important;
+    color: #000000 !important;
+  }
+
+  #printable-resume h2 {
+    font-size: 12pt !important;
+    font-weight: bold !important;
+    border-bottom: 1px solid #333333 !important;
+    padding-bottom: 3px !important;
+    margin-top: 14pt !important;
+    margin-bottom: 6pt !important;
+  }
+
+  #printable-resume h3 {
+    font-size: 11pt !important;
+    font-weight: bold !important;
+  }
+}
+
+/* Subtle custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--app-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--app-card);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--app-accent);
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.04);
+  }
+}
+
+.animate-glow {
+  animation: pulseGlow 6s ease-in-out infinite;
+}
+
+
+
